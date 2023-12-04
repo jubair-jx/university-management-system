@@ -1,6 +1,5 @@
 import { Schema, model, connect } from "mongoose";
 import validator from "validator";
-import bcrypt from "bcrypt";
 import {
   StudentMethods,
   StudentModel,
@@ -106,10 +105,13 @@ const localGurdinanSchema = new Schema<TLocalGurdinan>(
 const StudentSchema = new Schema<TStudentData, StudentModel, StudentMethods>(
   {
     id: { type: String, required: true, unique: true },
-    password: {
-      type: String,
-      maxlength: [20, "Password More than 20 Charc Will be Accepted"],
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, "UserId must be unique."],
+      unique: true,
+      ref: "User",
     },
+
     name: {
       type: NameSchema,
       required: true,
@@ -149,10 +151,6 @@ const StudentSchema = new Schema<TStudentData, StudentModel, StudentMethods>(
       enum: ["active", "blocked"],
       default: "active",
     },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     toJSON: {
@@ -166,18 +164,6 @@ StudentSchema.virtual("fullName").get(function () {
 });
 
 //pre save middleware/hook : will work on create() and save()
-StudentSchema.pre("save", async function (next) {
-  // console.log(this, "Post hook : we saved our Data");
-  const user = this;
-  user.password = await bcrypt.hash(user.password, Number(config.saltKey));
-  next();
-});
-//when save data on MongoDB
-StudentSchema.post("save", function (doc, next) {
-  // console.log(this, "Post hook : we saved our Data");
-  doc.password = "";
-  next();
-});
 
 StudentSchema.pre("find", function (next) {
   // console.log(next);
