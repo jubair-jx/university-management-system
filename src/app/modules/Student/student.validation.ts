@@ -26,24 +26,28 @@ const LocalGuardianValidationSchema = z.object({
   address: z.string(),
 });
 
-export const StudentDataValidationSchema = z.object({
-  id: z.string(),
-  password: z.string().max(20),
-  name: NameValidationSchema,
-  gender: z.enum(["male", "female", "others"]),
-  dateOfBirth: z.string(),
-  email: z.string().email(),
-  contactNo: z.string(),
-  emergencyContactNo: z.string(),
-  bloogGroup: z
-    .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
-    .optional(),
-  presentAddress: z.string(),
-  permanentAddres: z.string(),
-  guardian: GuardianValidationSchema,
-  localGuardian: LocalGuardianValidationSchema,
-  profileImg: z.string().optional(),
-  isActive: z.enum(["active", "blocked"]).default("active"),
-  isDeleted: z.boolean(),
+export const createStudentDataValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20),
+    student: z.object({
+      name: NameValidationSchema,
+      gender: z.enum(["male", "female", "others"]),
+      dateOfBirth: z.string(),
+      email: z.string().email(),
+      contactNo: z.string(),
+      emergencyContactNo: z.string(),
+      bloogGroup: z
+        .enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"])
+        .optional(),
+      presentAddress: z.string(),
+      permanentAddres: z.string(),
+      guardian: GuardianValidationSchema,
+      localGuardian: LocalGuardianValidationSchema,
+      admissionSemesterId: z.string(),
+      profileImg: z.string().optional(),
+    }),
+  }),
 });
-export default StudentDataValidationSchema;
+export const studentValidations = {
+  createStudentDataValidationSchema,
+};
