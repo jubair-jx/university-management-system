@@ -7,7 +7,6 @@ academicRouter.post(
   "/create-academic-semester",
   academicSemsterController.createAcademicSemester
 );
-
 academicRouter.get(
   "/get-academic-semester",
   academicSemsterController.getSemesters

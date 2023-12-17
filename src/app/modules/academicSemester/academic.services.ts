@@ -5,11 +5,12 @@ import {
 } from "./academicSem.interface";
 import { AcademicModel } from "./academicSemModel";
 import mongoose from "mongoose";
+import { AcademicSemesterCodeMapper } from "./academic.constant";
 
 const createAcademicSemesterIntoDB = async (payload: TAcademicSemester) => {
   const academicSemesterCodeMapper: TAcademicSemesterCodeMapper = {
     Autumn: "01",
-    Summer: "02",
+    Summar: "02",
     Fall: "03",
   };
   if (academicSemesterCodeMapper[payload.name] !== payload.code) {
@@ -31,15 +32,30 @@ const getSingleAcademicSemester = async (id: string) => {
   return result;
 };
 
-const updateSingleAcademicSemester = async (id: string, data: object) => {
+const updateSingleAcademicSemester = async (
+  id: string,
+  payload: Partial<TAcademicSemester>
+) => {
+  if (
+    payload.name &&
+    payload.code &&
+    AcademicSemesterCodeMapper[payload.name] !== payload.code
+  ) {
+    throw new Error("Invalid Semester Code");
+  }
+
   const result = await AcademicModel.updateOne(
     {
       _id: new mongoose.Types.ObjectId(id),
     },
     {
-      $set: data,
+      $set: payload,
+    },
+    {
+      new: true,
     }
   );
+
   return result;
 };
 
