@@ -41,6 +41,7 @@ export type TStudentData = {
   localGuardian: TLocalGurdinan;
   profileImg?: string;
   admissionSemesterId: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
   isActive: "active" | "blocked";
   isDeleted: boolean;
 };
