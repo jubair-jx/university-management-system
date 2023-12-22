@@ -21,18 +21,18 @@ const departmentSchema = new Schema<TAcademicDepartment>(
 );
 
 //for already existing department on DB
-departmentSchema.pre("save", async function (next) {
-  const isExistDepartment = await AcademicDepartModel.findOne({
-    name: this.name,
-  });
-  if (isExistDepartment) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      "This department is Already exist"
-    );
-  }
-  next();
-});
+// departmentSchema.pre("save", async function (next) {
+//   const isExistDepartment = await AcademicDepartModel.findOne({
+//     name: this.name,
+//   });
+//   if (isExistDepartment) {
+//     throw new AppError(
+//       httpStatus.NOT_FOUND,
+//       "This department is Already exist"
+//     );
+//   }
+//   next();
+// });
 //for already existing, but need to update the data
 
 departmentSchema.pre("findOneAndUpdate", async function (next) {

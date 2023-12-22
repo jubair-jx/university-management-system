@@ -4,9 +4,20 @@ import { TStudentData } from "./student.interface";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import { userModel } from "../User/user.model";
+import { Request, Response } from "express";
 
-const getAllDataFromDB = async () => {
-  const result = await Student.find()
+const getAllDataFromDB = async (query: Record<string, unknown>) => {
+  let searchItem = "";
+
+  if (query?.searchItem) {
+    searchItem = query?.searchItem as string;
+  }
+
+  const result = await Student.find({
+    $or: ["email", "name.firstName", "presentAddress"].map((field) => ({
+      [field]: { $regex: searchItem, $options: "i" },
+    })),
+  })
     .populate("admissionSemesterId")
     .populate({
       path: "academicDepartment",
@@ -51,8 +62,45 @@ const deletedStudentFromDB = async (id: string) => {
     throw new Error("Failed to delete student");
   }
 };
+
+const updatedStudentIntoDB = async (
+  id: string,
+  payload: Partial<TStudentData>
+) => {
+  const { name, guardian, localGuardian, ...remainingStudentData } = payload;
+
+  const modifyData: Record<string, unknown> = {
+    ...remainingStudentData,
+  };
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifyData[`name.${key}`] = value;
+    }
+  }
+
+  if (guardian && Object.keys(guardian).length) {
+    for (const [key, value] of Object.entries(guardian)) {
+      modifyData[`guardian.${key}`] = value;
+    }
+  }
+
+  if (localGuardian && Object.keys(localGuardian).length) {
+    for (const [key, value] of Object.entries(localGuardian)) {
+      modifyData[`guardian.${key}`] = value;
+    }
+  }
+
+  const result = await Student.findOneAndUpdate({ id }, modifyData, {
+    new: true,
+    runValidators: true,
+  });
+  return result;
+};
+
 export const StudentServices = {
   deletedStudentFromDB,
   getAllDataFromDB,
   getSingleStudentData,
+  updatedStudentIntoDB,
 };
