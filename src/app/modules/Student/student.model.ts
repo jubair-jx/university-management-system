@@ -7,8 +7,8 @@ import {
   TLocalGurdinan,
   TStudentData,
   TUserName,
-} from "./Student/student.interface";
-import config from "../config";
+} from "./student.interface";
+import config from "../../config";
 
 //Indiviul Data Schema
 const NameSchema = new Schema<TUserName>(

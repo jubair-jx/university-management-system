@@ -3,7 +3,7 @@ import config from "../../config";
 import { TStudentData } from "../Student/student.interface";
 import { academicServices } from "../academicSemester/academic.services";
 import { AcademicModel } from "../academicSemester/academicSemModel";
-import { Student } from "../student.model";
+import { Student } from "../Student/student.model";
 import { TUser, newUser } from "./user.interface";
 import { userModel } from "./user.model";
 import { generatedStudentId } from "./user.utils";
