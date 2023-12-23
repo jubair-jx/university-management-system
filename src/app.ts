@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application} from "express";
 import studentRoute from "./app/modules/Student/student.route";
 const app: Application = express();
 import cors from "cors";

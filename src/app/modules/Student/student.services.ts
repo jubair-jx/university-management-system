@@ -7,17 +7,28 @@ import { userModel } from "../User/user.model";
 import { Request, Response } from "express";
 
 const getAllDataFromDB = async (query: Record<string, unknown>) => {
-  let searchItem = "";
+  console.log("base query", query);
+  const queryObj = { ...query };
+  // console.log("queryObj", queryObj);
+  let searchTerm = "";
+  // const studentSearchField = ["email", "name.firstName", "presentAddress"];
+  // if (query?.searchTerm) {
+  //   searchTerm = query?.searchTerm as string;
+  // }
 
-  if (query?.searchItem) {
-    searchItem = query?.searchItem as string;
-  }
+  // const excludedField = ["searchTerm", "sort", "limit", "page", "fields"];
+  // excludedField.forEach((el) => delete queryObj[el]);
 
-  const result = await Student.find({
-    $or: ["email", "name.firstName", "presentAddress"].map((field) => ({
-      [field]: { $regex: searchItem, $options: "i" },
-    })),
-  })
+  // const searchQuery = Student.find({
+  //   $or: studentSearchField.map((field) => ({
+  //     [field]: { $regex: searchTerm, $options: "i" },
+  //   })),
+  // });
+
+  //filtering
+
+  const filterQuery = searchQuery
+    .find(queryObj)
     .populate("admissionSemesterId")
     .populate({
       path: "academicDepartment",
@@ -25,7 +36,37 @@ const getAllDataFromDB = async (query: Record<string, unknown>) => {
         path: "academicFaculty",
       },
     });
-  return result;
+
+  let sort = "-createdAt";
+  if (query.sort) {
+    sort = query.sort as string;
+  }
+
+  const sortQuery = filterQuery.sort(sort);
+
+  let limit = 1;
+  let page = 1;
+  let skip = 0;
+  if (query.limit) {
+    limit = Number(query.limit);
+  }
+
+  if (query.page) {
+    page = Number(query.page);
+    skip = (page - 1) * limit;
+  }
+  const paginateQuery = sortQuery.skip(skip);
+  const limitQuery = paginateQuery.limit(limit);
+
+  let fields = "-__v";
+
+  if (query.fields) {
+    fields = (query.fields as string).split(",").join(" ");
+  }
+
+  const fieldQuery = await limitQuery.select(fields);
+
+  return fieldQuery;
 };
 const getSingleStudentData = async (id: string) => {
   // const result = await Student.findOne({ id });
