@@ -21,7 +21,7 @@ router.get(
 
 router.get("/", SemesterRegistrationControllers.getAllSemesterRegistration);
 
-router.patch(
+router.put(
   "/:id",
   requestHandler(
     SemesterRegistrationValidations.upadateSemesterRegistrationValidationSchema
