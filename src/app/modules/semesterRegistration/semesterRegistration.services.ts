@@ -89,6 +89,31 @@ const updateSemesterRegistrationIntoDB = async (
   if (currentSemesterStatus === "ENDED") {
     throw new AppError(httpStatus.BAD_REQUEST, "This Semester has been Ended");
   }
+
+  const requestedStatus = payload?.status;
+
+  //UPCOMING => ONGOING => ENDED
+  if (currentSemesterStatus === "UPCOMING" && requestedStatus === "ENDED") {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `You can not directly change status from ${currentSemesterStatus} to ${requestedStatus}`
+    );
+  }
+  if (currentSemesterStatus === "ONGOING" && requestedStatus === "UPCOMING") {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `You can not directly change status from ${currentSemesterStatus} to ${requestedStatus}`
+    );
+  }
+  const result = await SemesterRegistrationModel.findByIdAndUpdate(
+    id,
+    payload,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  return result;
 };
 
 export const SemesterRegistrationServices = {
