@@ -8,4 +8,5 @@ export default {
   dbUrl: process.env.DB_URL,
   saltKey: process.env.SALT_KEY,
   defaultPass: process.env.DEFAULT_PASS,
+  jwt_token: process.env.ACCESS_TOKEN,
 };

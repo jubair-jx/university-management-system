@@ -3,6 +3,8 @@ import AppError from "../../errors/AppError";
 import { userModel } from "../User/user.model";
 import { TLoginUser } from "./auth.interface";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import config from "../../config";
 const createLoginIntoDB = async (payload: TLoginUser) => {
   // console.log(payload);
   //check the user is exist on DB
@@ -33,8 +35,20 @@ const createLoginIntoDB = async (payload: TLoginUser) => {
 
   if (!(await userModel.isPasswordCorrect(payload?.password, user?.password)))
     throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
+  //create token sent to the client
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+  };
 
-  return {};
+  const accessToken = jwt.sign(jwtPayload, config.jwt_token as string, {
+    expiresIn: "10h",
+  });
+
+  return {
+    accessToken,
+    needPasswordChange: user?.needPasswordChange,
+  };
 };
 
 export const authServices = {

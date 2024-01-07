@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\User\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add http-status
+  C:\Program Files\nodejs\node.exe C:\Users\User\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/jsonwebtoken
 
 PATH: 
-  C:\Users\User\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\User\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Dart\dart-sdk\bin;C:\WINDOWS\System32\OpenSSH;C:\Users\User\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\User\AppData\Roaming\.dotnet;C:\Users\User\AppData\Local\Microsoft\WindowsApps;C:\Users\User\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\User\.dotnet\tools;C:\Users\User\AppData\Roaming\npm;C:\php;C:\Users\User\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\User\AppData\Local\Programs\mongosh;C:\Program Files\MongoDB\Server\7.0\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Dart\dart-sdk\bin;C:\WINDOWS\System32\OpenSSH\;C:\Users\User\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\User\AppData\Roaming\.dotnet;C:\Users\User\AppData\Local\Microsoft\WindowsApps;C:\Users\User\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\User\.dotnet\tools;C:\Users\User\AppData\Roaming\npm;C:\php;C:\Users\User\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\User\AppData\Local\Programs\mongosh\;C:\Program Files\MongoDB\Server\7.0\bin;
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'P:\Next Level Web Dev\NOSQL Brainiac Backend-MS-3\PH Management\node_modules\bcrypt\lib\binding\napi-v3\bcrypt_lib.node'
+  Error: EPERM: operation not permitted, unlink 'P:\Next Level Web Dev\NOSQL Brainiac Backend-MS-4\PH Management\node_modules\bcrypt\lib\binding\napi-v3\bcrypt_lib.node'
 
 npm manifest: 
   {
@@ -41,6 +41,7 @@ npm manifest:
       "dotenv": "^16.3.1",
       "eslint": "^8.54.0",
       "express": "^4.18.2",
+      "http-status": "^1.7.3",
       "mongoose": "^8.0.1",
       "validator": "^13.11.0",
       "zod": "^3.22.4"
@@ -1210,6 +1211,11 @@ Lockfile:
       setprototypeof "1.2.0"
       statuses "2.0.1"
       toidentifier "1.0.1"
+  
+  http-status@^1.7.3:
+    version "1.7.3"
+    resolved "https://registry.npmjs.org/http-status/-/http-status-1.7.3.tgz"
+    integrity sha512-GS8tL1qHT2nBCMJDYMHGkkkKQLNkIAHz37vgO68XKvzv+XyqB4oh/DfmMHdtRzfqSJPj1xKG2TaELZtlCz6BEQ==
   
   https-proxy-agent@^5.0.0:
     version "5.0.1"
