@@ -6,12 +6,14 @@ import requestHandler from "../../middleware/validateRequest";
 import { createFacultyValidationSchema } from "../Faculty/Faculty.validation";
 import { createAdminValidationSchema } from "../Admin/Admin.validation";
 import { UserControllers } from "./user.controller";
+import auth from "../../middleware/auth";
+import { USER_ROLE } from "./user.constant";
 
 const router = express.Router();
 
 router.post(
   "/create-student",
-  // auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin),
   requestHandler(createStudentDataValidationSchema),
   UserControllers.createStudent
 );

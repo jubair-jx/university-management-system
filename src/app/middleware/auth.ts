@@ -5,7 +5,8 @@ import AppError from "../errors/AppError";
 import httpStatus from "http-status";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
-const auth = (schema: AnyZodObject) => {
+import { TUserRole } from "../modules/User/user.interface";
+const auth = (...requireRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
     //get check the authorized person
@@ -18,6 +19,13 @@ const auth = (schema: AnyZodObject) => {
       if (err) {
         throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized ");
       }
+
+      const role = (decoded as JwtPayload).role;
+
+      if (requireRoles && !requireRoles.includes(role)) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized ");
+      }
+
       req.user = decoded as JwtPayload;
       next();
     });
