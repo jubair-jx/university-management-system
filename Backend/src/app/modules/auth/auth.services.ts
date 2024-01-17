@@ -1,10 +1,9 @@
 import httpStatus from "http-status";
+import jwt from "jsonwebtoken";
+import config from "../../config";
 import AppError from "../../errors/AppError";
 import { userModel } from "../User/user.model";
 import { TLoginUser } from "./auth.interface";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import config from "../../config";
 const createLoginIntoDB = async (payload: TLoginUser) => {
   // console.log(payload);
   //check the user is exist on DB
@@ -50,7 +49,16 @@ const createLoginIntoDB = async (payload: TLoginUser) => {
     needPasswordChange: user?.needPasswordChange,
   };
 };
-
+const changeUserPassword = async (
+  user: { userId: string; role: string },
+  payload
+) => {
+  const result = await userModel.findOneAndUpdate({
+    id: user.userId,
+    role: user.role,
+  });
+};
 export const authServices = {
   createLoginIntoDB,
+  changeUserPassword,
 };

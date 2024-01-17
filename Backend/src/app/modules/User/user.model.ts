@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
-import { TUser, UserModel } from "./user.interface";
-import config from "../../config";
 import bcrypt from "bcrypt";
+import { Schema, model } from "mongoose";
+import config from "../../config";
+import { TUser, UserModel } from "./user.interface";
 
 export const userSchema = new Schema<TUser, UserModel>(
   {
@@ -12,6 +12,7 @@ export const userSchema = new Schema<TUser, UserModel>(
     password: {
       type: String,
       maxlength: [20, "Password More than 20 Charc Will be Accepted"],
+      select: 0,
     },
     needPasswordChange: {
       type: Boolean,
@@ -52,7 +53,7 @@ userSchema.post("save", function (doc, next) {
 });
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await userModel.findOne({ id });
+  return await userModel.findOne({ id }).select("+password");
 };
 userSchema.statics.isPasswordCorrect = async function (
   plainTextPassword,

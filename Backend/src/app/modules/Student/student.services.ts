@@ -1,12 +1,11 @@
-import mongoose from "mongoose";
-import { Student } from "./student.model";
-import { TStudentData } from "./student.interface";
-import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
-import { userModel } from "../User/user.model";
-import { Request, Response } from "express";
+import mongoose from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
+import AppError from "../../errors/AppError";
+import { userModel } from "../User/user.model";
 import { studentSearchableFields } from "./student.constant";
+import { TStudentData } from "./student.interface";
+import { Student } from "./student.model";
 
 const getAllDataFromDB = async (query: Record<string, unknown>) => {
   // console.log("base query", query);
@@ -57,7 +56,7 @@ const getAllDataFromDB = async (query: Record<string, unknown>) => {
   // const fieldQuery = await limitQuery.select(fields);
   // return fieldQuery;
   const studentQuery = new QueryBuilder(
-    Student.find()
+    Student.find().populate('user')
       .populate("admissionSemesterId")
       .populate({
         path: "academicDepartment",
