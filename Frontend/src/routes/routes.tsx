@@ -4,7 +4,7 @@ import Contact from "@/pages/Contact/Contact";
 import Login from "@/pages/Login/Login";
 import Register from "@/pages/Register/Register";
 import { createBrowserRouter } from "react-router-dom";
-import { adminRoutes } from "./admin.routes";
+import { adminPaths } from "./admin.routes";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <App />,
-    children: adminRoutes,
+    children: adminPaths,
   },
   {
     path: "/login",
