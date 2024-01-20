@@ -1,8 +1,8 @@
-import { adminSideBarItems } from "@/routes/admin.routes";
-import { Layout, Menu, theme } from "antd";
+import { Layout, theme } from "antd";
 import { Outlet } from "react-router-dom";
+import SidebarLayout from "./SidebarLayout";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const {
@@ -10,27 +10,7 @@ const MainLayout = () => {
   } = theme.useToken();
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div className="demo-logo-vertical" />
-        <div className=" p-2 text-center font-semibold text-lg text-white">
-          <h1>University Management System</h1>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={adminSideBarItems}
-        />
-      </Sider>
+      <SidebarLayout />
       <Layout>
         <Header
           style={{
