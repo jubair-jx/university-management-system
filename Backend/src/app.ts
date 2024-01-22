@@ -1,13 +1,15 @@
-import express, { Application} from "express";
-import studentRoute from "./app/modules/Student/student.route";
-const app: Application = express();
+import cookieParser from "cookie-parser";
 import cors from "cors";
-import { userRouter } from "./app/modules/User/user.route";
+import express, { Application } from "express";
 import globalErrorhandler from "./app/middleware/globalError";
 import notFound from "./app/middleware/notFound";
 import router from "./app/routes";
-app.use(cors());
+const app: Application = express();
+
+app.use(cookieParser());
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
 app.use("/api/v1", router);
 
 //global error handler

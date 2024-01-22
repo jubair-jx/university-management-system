@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type TInitialStateType = {
-  user: null | undefined;
-  token: null | undefined;
+  user: null | object;
+  token: null | string;
 };
 
 const initialState: TInitialStateType = {
